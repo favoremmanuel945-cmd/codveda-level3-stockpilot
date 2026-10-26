@@ -14,6 +14,17 @@ function App() {
   const [checking, setChecking] = useState(true)
   const [error, setError] = useState('')
   const [user, setUser] = useState(null)
+  const [welcomeChoice, setWelcomeChoice] = useState(null)
+  const [showPreview, setShowPreview] = useState(false)
+
+  const welcomeKey = user?.id ? `stockpilot-welcome-v2:${user.id}` : user?.email ? `stockpilot-welcome-v2:${user.email}` : null
+  const welcomeComplete = welcomeKey ? localStorage.getItem(welcomeKey) === 'complete' : false
+  function finishWelcome() {
+    if (welcomeKey) localStorage.setItem(welcomeKey, 'complete')
+    setWelcomeChoice('complete')
+    setShowPreview(false)
+  }
+
 
   useEffect(() => {
     let active = true
@@ -97,6 +108,23 @@ function App() {
   }
 
   if (user) {
+    if (!welcomeComplete && welcomeChoice !== 'complete') {
+      return <main className="sp-welcome">
+        <div className="sp-welcome-glow" />
+        <div className="sp-welcome-shell">
+          <div className="sp-welcome-brand"><span className="sp-welcome-mark"><Boxes size={24} /></span> stockpilot<span className="sp-welcome-dot">.</span></div>
+          <span className="sp-welcome-kicker"><Sparkles size={15} /> YOUR BUSINESS, BEAUTIFULLY ORGANIZED</span>
+          <h1>Make room for<br /><em>better business.</em></h1>
+          <p className="sp-welcome-lead">Welcome, {user.name?.split(' ')[0] || 'there'}. Your workspace is ready. Track what you stock, understand what sells, and grow with confidence.</p>
+          <div className="sp-welcome-choices">
+            <button onClick={finishWelcome} className="sp-welcome-choice primary"><span className="sp-welcome-choice-icon"><ArrowRight size={22} /></span><strong>Enter my workspace</strong><small>Start with your own real inventory and sales.</small><ArrowRight className="sp-welcome-choice-arrow" size={18} /></button>
+            <button onClick={() => setShowPreview(true)} className="sp-welcome-choice"><span className="sp-welcome-choice-icon"><BarChart3 size={22} /></span><strong>Explore a preview</strong><small>See illustrative figures without changing your data.</small><ArrowRight className="sp-welcome-choice-arrow" size={18} /></button>
+          </div>
+          {showPreview && <section className="sp-welcome-preview" aria-label="Illustrative dashboard preview"><div className="sp-welcome-preview-head"><strong>Sample business snapshot</strong><span>DEMO DATA — NOT SAVED</span></div><div className="sp-welcome-preview-grid"><div><small>Monthly revenue</small><strong>₦248,500</strong></div><div><small>Products in stock</small><strong>32</strong></div><div><small>Units sold</small><strong>184</strong></div></div><p>These are example figures only. Your actual dashboard displays information from your account.</p><button onClick={finishWelcome}>Continue to my workspace <ArrowRight size={16}/></button></section>}
+          <div className="sp-welcome-foot"><ShieldCheck size={15} /> Your existing account data is safe and unchanged.</div>
+        </div>
+      </main>
+    }
     return <Dashboard user={user} onLogout={logout} loggingOut={loading} />
   }
 
