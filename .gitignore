@@ -13,3 +13,15 @@ dist/
 
 # Local source backups
 *.bak
+
+# Local development and private files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+node_modules/
+dist/
+backups/
+.DS_Store

@@ -1,10 +1,6 @@
+import Dashboard from './Dashboard'
 import { useEffect, useState } from 'react'
-import {
-  ArrowRight, ArrowUpRight, BarChart3, Boxes,
-  CheckCircle2, Eye, EyeOff, LoaderCircle,
-  LockKeyhole, Mail, Package, ShieldCheck,
-  Sparkles, TrendingUp, UserRound, LogOut
-} from 'lucide-react'
+import { ArrowRight, ArrowUpRight, BarChart3, Boxes, Eye, EyeOff, LoaderCircle, LockKeyhole, Mail, Package, ShieldCheck, Sparkles, TrendingUp, UserRound } from 'lucide-react'
 import { api } from './lib/api'
 import './App.css'
 
@@ -101,31 +97,7 @@ function App() {
   }
 
   if (user) {
-    return (
-      <main className="welcome-page">
-        <header className="welcome-header">
-          <div className="brand">
-            <span className="brand-mark"><Boxes size={22} /></span>
-            <span>stockpilot<span className="brand-dot">.</span></span>
-          </div>
-          <button className="logout-btn" onClick={logout} disabled={loading}>
-            <LogOut size={16} /> Sign out
-          </button>
-        </header>
-        <section className="welcome-content">
-          <span className="eyebrow"><CheckCircle2 size={15} /> AUTHENTICATED WORKSPACE</span>
-          <h1>Welcome aboard,<br /><em>{user.name}.</em></h1>
-          <p>Your StockPilot account is ready. Your inventory and sales dashboard is the next stage of the build.</p>
-          <div className="welcome-profile">
-            <div className="avatar">{user.name.charAt(0).toUpperCase()}</div>
-            <div><strong>{user.name}</strong><span>{user.email}</span></div>
-            <ShieldCheck size={21} className="verified" />
-          </div>
-          {error && <div className="form-error" role="alert">{error}</div>}
-          <div className="next-step"><Sparkles size={18} /> Secure login is working. Dashboard integration comes next.</div>
-        </section>
-      </main>
-    )
+    return <Dashboard user={user} onLogout={logout} loggingOut={loading} />
   }
 
   return (
@@ -170,7 +142,7 @@ function App() {
         </div>
 
         <div className="showcase-bottom">
-          <span>© {new Date().getFullYear()} STOCKPILOT</span>
+          <span>© {2026} STOCKPILOT</span>
           <span>MADE FOR THE WAY YOU WORK <ArrowUpRight size={13} /></span>
         </div>
       </section>
