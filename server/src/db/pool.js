@@ -32,7 +32,9 @@ for (const key of [
 export const pool = new Pool({
   connectionString: url.toString(),
   ssl: {
-    ca: fs.readFileSync(certificatePath, 'utf8'),
+    ca: process.env.DATABASE_CA_CERT
+      ? process.env.DATABASE_CA_CERT.replace(/\\n/g, '\n')
+      : fs.readFileSync(certificatePath, 'utf8'),
     rejectUnauthorized: true
   },
   max: 5,
