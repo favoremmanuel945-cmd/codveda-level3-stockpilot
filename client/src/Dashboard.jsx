@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Activity, ArrowRight, BarChart3, Boxes, Check, ChevronDown, CircleAlert, DollarSign, LayoutDashboard, LogOut, Menu, Package, PackagePlus, Pencil, Plus, Search, Settings, ShoppingBag, Trash2, TrendingUp, X } from 'lucide-react'
+import { Sparkles, Activity, ArrowRight, BarChart3, Boxes, Check, ChevronDown, CircleAlert, DollarSign, LayoutDashboard, LogOut, Menu, Package, PackagePlus, Pencil, Plus, Search, Settings, ShoppingBag, Trash2, TrendingUp, X } from 'lucide-react'
 import {
   Area, AreaChart, CartesianGrid, ResponsiveContainer,
   Tooltip, XAxis, YAxis
@@ -299,6 +299,16 @@ function Dashboard({ user, onLogout, loggingOut }) {
                 <Plus size={18} /> Add product
               </button>
             </div>
+            <section className="sp-feature-banner">
+              <div className="sp-feature-copy">
+                <span className="sp-feature-eyebrow"><Sparkles size={14} /> YOUR BUSINESS COMMAND CENTER</span>
+                <h2>Everything in stock.<br /><em>Everything in sight.</em></h2>
+                <p>Make confident decisions with your inventory, sales, and insights in one place.</p>
+                <div className="sp-feature-actions"><button onClick={() => navigate('inventory')}><Package size={16} /> Manage inventory</button><button onClick={() => navigate('analytics')}><BarChart3 size={16} /> View insights <ArrowRight size={15}/></button></div>
+              </div>
+              <div className="sp-feature-visual" aria-hidden="true"><div className="sp-feature-orbit orbit-one"/><div className="sp-feature-orbit orbit-two"/><div className="sp-feature-center"><Boxes size={48}/></div><span className="sp-feature-float one"><TrendingUp size={18}/></span><span className="sp-feature-float two"><ShoppingBag size={18}/></span><span className="sp-feature-float three"><Package size={18}/></span></div>
+            </section>
+            {!loading && products.length === 0 && sales.length === 0 && <section className="sp-get-started"><div className="sp-get-started-icon"><PackagePlus size={22}/></div><div><strong>Let's stock your first shelf.</strong><p>Add a product to unlock meaningful inventory tracking and sales insights.</p></div><button onClick={() => openProduct()}>Add first product <ArrowRight size={16}/></button></section>}
             <div className="sp-stats">
               <Stat label="Total products" value={integer(products.length)}
                 icon={Package} detail="Products in inventory" />
